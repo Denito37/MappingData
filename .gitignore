@@ -1,2 +1,4 @@
 .venv
 .DSstore
+.env
+.env.local
