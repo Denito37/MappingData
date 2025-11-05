@@ -2,7 +2,6 @@ import requests
 import pandas as pd
 from dotenv import load_dotenv
 import os
-import json
 
 load_dotenv()
 API_TOKEN = os.getenv("API_TOKEN")
@@ -17,9 +16,12 @@ def fetch_data(url):
     data = response.json()
     return data
 
-
 def read_drinking_fountains_data():
     data = fetch_data(drinkingFountainsAPIURL)
-    json_data = json.dumps(data)
-    fountains = pd.read_json(json_data)
-    return fountains
+    dataFrame = pd.DataFrame(data)
+    return dataFrame
+
+def read_tree_census_data():
+    data = fetch_data(treesCensusAPIURL)
+    dataFrame = pd.DataFrame(data)
+    return dataFrame

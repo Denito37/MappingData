@@ -2,24 +2,31 @@ import pandas as pd
 
 dropFountainColumns = [
     'painted', 'fountainco', 'fountainty', 'gispropnum','decription', 'parentid',
+    ':id',':version',':@computed_region_f5dn_yrer',':@computed_region_yeji_bk3q',':@computed_region_sbqj_enih',':@computed_region_92fq_4b7q', ':created_at'
 ]
 
 renameFountainColumns = {
     'system': 'id',
     'featuresta': 'status',
-    'propertyna':'located_at'
+    'propertyna':'located_at',
+    'the_geom':'coordinates'
 }
 
 dropTreeColumns = [
     'stump_diam', 'curb_loc', 'root_stone', 'root_grate', 'root_other',
-    'trunk_wire', 'trunk_other', 'trunk_light', 'brch_light', 'brch_heavy', 'brch_other',
+    'trunk_wire', 'trnk_other', 'trnk_light', 'brch_light', 'brch_shoe', 'brch_other',
     'sidewalk', 'zip_city', 'state', 'cb_num', 'borocode',
     'x_sp', 'y_sp', 'block_id', 'bbl', 'bin', 'spc_latin', 'steward',
-    'guards', 'sidewalk', 'health','tree_dhb','user_type','problems', 'address', 'zipcode', 'cncldist',
-    'st_assem', 'st_senate', 'nta', 'nta_name', 'boro_ct', 'census_tract', 'council_district'
+    'guards', 'sidewalk', 'health','tree_dbh','user_type','problems', 'address', 'zipcode', 'cncldist',
+    'st_assem', 'st_senate', 'nta', 'nta_name', 'boro_ct', 'census_tract', 'council_district',
+    ':id',':version',':created_at','created_at'
 ]
 
-renameTreeColumns = {}
+renameTreeColumns = {
+    'tree_id':'id',
+    'spc_common':'name',
+    'boroname':'borough'
+}
 
 def transform_drinking_fountains_data(data):
     fountains_cleaned = data.drop(dropFountainColumns, axis=1)
@@ -29,6 +36,4 @@ def transform_drinking_fountains_data(data):
 def transform_trees_census_data(data):
     trees_cleaned = data.drop(dropTreeColumns,axis=1)
     trees_cleaned = trees_cleaned.rename(columns=renameTreeColumns)
-    return trees_cleaned
-
-# run transformation in batches   
+    return trees_cleaned  
