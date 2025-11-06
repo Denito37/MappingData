@@ -6,3 +6,6 @@
 ### Technologies
 - Python
 - Pandas
+- GeoPandas
+- Requests
+- Rasterio
