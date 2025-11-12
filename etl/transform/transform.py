@@ -35,6 +35,8 @@ renameTreeColumns = {
 def transform_drinking_fountains_data(data):
     fountains_cleaned = data.drop(dropFountainColumns, axis=1)
     fountains_cleaned = fountains_cleaned.rename(columns=renameFountainColumns)
+    fountains_cleaned = gpd.GeoDataFrame(fountains_cleaned)
+    fountains_cleaned = fountains_cleaned.set_geometry('coordinates')
     return fountains_cleaned
 
 def transform_trees_census_data(data):
@@ -42,7 +44,11 @@ def transform_trees_census_data(data):
     trees_cleaned = data.drop(dropTreeColumns,axis=1)
     trees_cleaned = trees_cleaned.rename(columns=renameTreeColumns)
     trees_cleaned['name'] = trees_cleaned['name'].fillna('Unknown')
+    trees_cleaned = trees_cleaned.set_geometry('coordinates')
     return trees_cleaned  
 
 def transform_map_data(data):
+    return
+
+def mapData():
     return

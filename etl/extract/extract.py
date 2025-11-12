@@ -28,8 +28,15 @@ def read_tree_census_data():
     dataFrame = pd.DataFrame(data)
     return dataFrame
 
+def open_map(file = nycTifFile):
+    nycMap = rasterio.open(file)
+    return nycMap
+
 def read_nyc_map(file = nycTifFile):
     with rasterio.open(file) as data:
         print(f'metadata: {data.meta}\nshape: {data.shape}\nbands: {data.count}')
         data = data.read(1)
     return data
+
+def create_raster():
+    return
