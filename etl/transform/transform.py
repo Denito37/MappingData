@@ -29,14 +29,14 @@ renameTreeColumns = {
     'tree_id':'id',
     'spc_common':'name',
     'boroname':'borough',
-    'geometry':'coordinates'
 }
 
 def transform_drinking_fountains_data(data):
     fountains_cleaned = data.drop(dropFountainColumns, axis=1)
     fountains_cleaned = fountains_cleaned.rename(columns=renameFountainColumns)
-    fountains_cleaned = gpd.GeoDataFrame(fountains_cleaned)
-    fountains_cleaned = fountains_cleaned.set_geometry('coordinates')
+    fountains_cleaned['coordinates'] = fountains_cleaned['the_geom.coordinates'].apply(lambda coords: Point(coords) if coords else None)
+    fountains_cleaned = gpd.GeoDataFrame(fountains_cleaned, geometry='coordinates')
+    fountains_cleaned = fountains_cleaned.drop(columns=['the_geom.coordinates', 'the_geom.type'])
     return fountains_cleaned
 
 def transform_trees_census_data(data):

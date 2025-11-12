@@ -12,13 +12,13 @@ def testMap():
     extent =[tempMap.bounds[0],tempMap.bounds[2],tempMap.bounds[1],tempMap.bounds[3]]
     ax = rasterio.plot.show(tempMap,extent=extent,ax=ax, cmap='Blues')
 
-    #fountain = read_drinking_fountains_data()
-    #fountainTransformed = transform_drinking_fountains_data(fountain)
-    #fountainTransformed.plot(ax=ax)
+    fountain = read_drinking_fountains_data()
+    fountainTransformed = transform_drinking_fountains_data(fountain)
+    fountainTransformed.plot(ax=ax)
 
-    tree = read_tree_census_data()
-    treeT = transform_trees_census_data(tree)
-    treeT.plot(ax=ax)
+    #tree = read_tree_census_data()
+    #treeT = transform_trees_census_data(tree)
+    #treeT.plot(ax=ax)
 
     return 0
 

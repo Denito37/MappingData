@@ -16,11 +16,12 @@ def fetch_data(url):
     response = requests.get(url)
     response.raise_for_status() 
     data = response.json()
-    return data
+    NormalizedData = pd.json_normalize(data)
+    return NormalizedData
 
 def read_drinking_fountains_data():
     data = fetch_data(drinkingFountainsAPIURL)
-    dataFrame = gpd.GeoDataFrame(data)
+    dataFrame = pd.DataFrame(data)
     return dataFrame
 
 def read_tree_census_data():
