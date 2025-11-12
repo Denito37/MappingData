@@ -10,15 +10,18 @@ def testMap():
     fig, ax = plt.subplots()
 
     extent =[tempMap.bounds[0],tempMap.bounds[2],tempMap.bounds[1],tempMap.bounds[3]]
-    ax = rasterio.plot.show(tempMap,extent=extent,ax=ax, cmap='Blues')
+    ax = rasterio.plot.show(tempMap,extent=extent,ax=ax, cmap='Reds')
 
     fountain = read_drinking_fountains_data()
     fountainTransformed = transform_drinking_fountains_data(fountain)
-    fountainTransformed.plot(ax=ax)
+    fountainTransformed.plot(ax=ax, color='blue')
 
     #tree = read_tree_census_data()
     #treeT = transform_trees_census_data(tree)
-    #treeT.plot(ax=ax)
+    #treeT.plot(ax=ax, color='green')
+
+    plt.show()
+
 
     return 0
 
@@ -35,4 +38,5 @@ def main():
 if __name__ == "__main__":
     main()
 
-# !ISSUE: calling the api endpoint for the tree data results in long load : 30+ sec load
+# !ISSUE: calling the api endpoint for the tree data & transforming data results in long load : 30+ sec load
+# !ISSUE: loading map of tree points results in long load: 4 mins

@@ -44,7 +44,7 @@ def transform_trees_census_data(data):
     trees_cleaned = data.drop(dropTreeColumns,axis=1)
     trees_cleaned = trees_cleaned.rename(columns=renameTreeColumns)
     trees_cleaned['name'] = trees_cleaned['name'].fillna('Unknown')
-    trees_cleaned = trees_cleaned.set_geometry('coordinates')
+    #trees_cleaned = trees_cleaned.set_geometry('coordinates')
     return trees_cleaned  
 
 def transform_map_data(data):
