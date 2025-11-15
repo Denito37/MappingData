@@ -61,3 +61,4 @@ if __name__ == "__main__":
 
 # !ISSUE: calling the api endpoint for the tree data & transforming data results in long load : 30+ sec load
 # !ISSUE: loading map of tree points results in long load: 4 mins
+# !ISSUE: Error using tree functions with docker
