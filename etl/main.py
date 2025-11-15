@@ -1,9 +1,29 @@
 from extract.extract  import read_drinking_fountains_data, read_tree_census_data, read_nyc_map, open_map
 from transform.transform import transform_drinking_fountains_data, transform_trees_census_data, transform_map_data
+from load.load import load_data
 import time
 import rasterio
 from rasterio.plot import show
 import matplotlib.pyplot as plt
+import asyncio
+import pandas as pd
+
+async def testETL():
+    testData = [
+        {
+
+    },
+    {
+
+    },
+    {
+
+    }]
+    fountain = read_drinking_fountains_data()
+    fountainTransformed = transform_drinking_fountains_data(fountain)
+    print(fountainTransformed.info())
+    #await load_data('Fountains', fountainTransformed)
+    return 0
 
 def testMap():
     tempMap = open_map()
@@ -29,7 +49,8 @@ def main():
     print("Starting ETL process...")
     start = time.time()
 
-    testMap()
+    #testMap()
+    asyncio.run(testETL())
 
     end = time.time()
     print(f"Execution time: {round(end - start)} Second(s)")
