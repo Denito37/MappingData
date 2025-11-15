@@ -15,7 +15,6 @@ a Python script to:
         docker build --secret id=API_TOKEN,env=API_TOKEN -t [imageName]:latest  ./etl 
 
     ```
-- Check your images in the Docker desktop & click run
 - Then run this command to execute the program:
     ```console
 
