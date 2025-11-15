@@ -1,56 +1,53 @@
 from extract.extract  import read_drinking_fountains_data, read_tree_census_data, read_nyc_map, open_map
-from transform.transform import transform_drinking_fountains_data, transform_trees_census_data, transform_map_data
+from transform.transform import transform_drinking_fountains_data, transform_trees_census_data 
 from load.load import load_data
 import time
-import rasterio
-from rasterio.plot import show
-import matplotlib.pyplot as plt
 import asyncio
 import pandas as pd
 
-async def testETL():
+async def test_ETL():
     testData = [
         {
+            ':updated_at':'test',
+            'id':'123',
+            'located_at':'test',
+            'borough':'test',
+            'department':'test',
+            'status':'test',
+            'coordinates':'test'
 
     },
     {
-
+            ':updated_at':'test',
+            'id':'456',
+            'located_at':'test',
+            'borough':'test',
+            'department':'test',
+            'status':'test',
+            'coordinates':'test'
     },
     {
+            ':updated_at':'test',
+            'id':'789',
+            'located_at':'test',
+            'borough':'test',
+            'department':'test',
+            'status':'test',
+            'coordinates':'test'
 
     }]
+    testData = pd.DataFrame(testData)
     fountain = read_drinking_fountains_data()
     fountainTransformed = transform_drinking_fountains_data(fountain)
     print(fountainTransformed.info())
-    #await load_data('Fountains', fountainTransformed)
-    return 0
-
-def testMap():
-    tempMap = open_map()
-    fig, ax = plt.subplots()
-
-    extent =[tempMap.bounds[0],tempMap.bounds[2],tempMap.bounds[1],tempMap.bounds[3]]
-    ax = rasterio.plot.show(tempMap,extent=extent,ax=ax, cmap='Reds')
-
-    fountain = read_drinking_fountains_data()
-    fountainTransformed = transform_drinking_fountains_data(fountain)
-    fountainTransformed.plot(ax=ax, color='blue')
-
-    #tree = read_tree_census_data()
-    #treeT = transform_trees_census_data(tree)
-    #treeT.plot(ax=ax, color='green')
-
-    plt.show()
-
-
+    await load_data('Fountains', testData)
     return 0
 
 def main():
     print("Starting ETL process...")
     start = time.time()
 
-    #testMap()
-    asyncio.run(testETL())
+    asyncio.run(test_ETL())
 
     end = time.time()
     print(f"Execution time: {round(end - start)} Second(s)")

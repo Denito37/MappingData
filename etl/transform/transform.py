@@ -1,7 +1,5 @@
-import pandas as pd
 import geopandas as gpd
 from shapely.geometry import Point
-from shapely import wkt
 
 dropFountainColumns = [
     'painted', 'fountainco', 'fountainty', 'gispropnum','decription', 'parentid','position',
@@ -32,23 +30,16 @@ renameTreeColumns = {
 }
 
 def transform_drinking_fountains_data(data):
-    fountains_cleaned = data.drop(dropFountainColumns, axis=1)
-    fountains_cleaned = fountains_cleaned.rename(columns=renameFountainColumns)
-    fountains_cleaned['coordinates'] = fountains_cleaned['the_geom.coordinates'].apply(lambda coords: Point(coords) if coords else None)
-    fountains_cleaned = gpd.GeoDataFrame(fountains_cleaned, geometry='coordinates')
-    fountains_cleaned = fountains_cleaned.drop(columns=['the_geom.coordinates', 'the_geom.type'])
-    return fountains_cleaned
+    fountainsCleaned = data.drop(dropFountainColumns, axis=1)
+    fountainsCleaned = fountainsCleaned.rename(columns=renameFountainColumns)
+    fountainsCleaned['coordinates'] = fountainsCleaned['the_geom.coordinates'].apply(lambda coords: Point(coords) if coords else None)
+    fountainsCleaned = gpd.GeoDataFrame(fountainsCleaned, geometry='coordinates')
+    fountainsCleaned = fountainsCleaned.drop(columns=['the_geom.coordinates', 'the_geom.type'])
+    return fountainsCleaned
 
 def transform_trees_census_data(data):
     data = gpd.GeoDataFrame(data, geometry=gpd.points_from_xy(data.longitude, data.latitude))
-    trees_cleaned = data.drop(dropTreeColumns,axis=1)
-    trees_cleaned = trees_cleaned.rename(columns=renameTreeColumns)
-    trees_cleaned['name'] = trees_cleaned['name'].fillna('Unknown')
-    #trees_cleaned = trees_cleaned.set_geometry('coordinates')
-    return trees_cleaned  
-
-def transform_map_data(data):
-    return
-
-def mapData():
-    return
+    treesCleaned = data.drop(dropTreeColumns,axis=1)
+    treesCleaned = treesCleaned.rename(columns=renameTreeColumns)
+    treesCleaned['name'] = treesCleaned['name'].fillna('Unknown')
+    return treesCleaned  

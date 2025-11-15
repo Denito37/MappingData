@@ -1,6 +1,5 @@
 import requests
 import pandas as pd
-import geopandas as gpd
 import rasterio 
 from dotenv import load_dotenv
 import os
@@ -38,6 +37,3 @@ def read_nyc_map(file = nycTifFile):
         print(f'metadata: {data.meta}\nshape: {data.shape}\nbands: {data.count}')
         data = data.read(1)
     return data
-
-def create_raster():
-    return
