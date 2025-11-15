@@ -16,3 +16,9 @@ a Python script to:
 
     ```
 - Check your images in the Docker desktop & click run
+- Then run this command to execute the program:
+    ```console
+
+        docker run [imageName]:latest
+
+    ```
