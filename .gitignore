@@ -3,5 +3,5 @@
 .env
 .env.local
 __pycache__/
-*.db
+*.db*
 1.0.0
