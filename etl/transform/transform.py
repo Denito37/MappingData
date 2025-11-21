@@ -16,7 +16,7 @@ renameFountainColumns = {
 dropTreeColumns = [
     'stump_diam', 'curb_loc', 'root_stone', 'root_grate', 'root_other',
     'trunk_wire', 'trnk_other', 'trnk_light', 'brch_light', 'brch_shoe', 'brch_other',
-    'sidewalk', 'zip_city', 'state', 'cb_num', 'borocode',
+    'sidewalk', 'zip_city', 'state', 'borocode',
     'x_sp', 'y_sp', 'block_id', 'bbl', 'bin', 'spc_latin', 'steward',
     'guards', 'sidewalk', 'health','tree_dbh','user_type','problems', 'address', 'zipcode', 'cncldist',
     'st_assem', 'st_senate', 'nta', 'nta_name', 'boro_ct', 'census_tract', 'council_district',
@@ -27,6 +27,7 @@ renameTreeColumns = {
     'tree_id':'id',
     'spc_common':'name',
     'boroname':'borough',
+    'cb_num': 'district'
 }
 
 def transform_drinking_fountains_data(data):
