@@ -1,10 +1,18 @@
-# ETL Python Script
+## ETL : Create Database
 
 ### Purpose
 a Python script to:
 - Extract data from NYC Open data APIs & ultilizize Google Earth engine's images on NYC's surface temperature
-- Transform that data to fit our needs
-- Load that data into the database that our web application will use
+- Transform that data to fit the business requirments
+- Load that data into a SQL database
+
+### Technologies
+- Python
+- Pandas
+- GeoPandas
+- Requests
+- SQLAlchemy
+- Rasterio
 
 ### How to run : With Docker
 - Make sure you have Docker desktop downloaded, if you don't go [here](https://www.docker.com/products/docker-desktop/)
