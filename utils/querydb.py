@@ -1,4 +1,4 @@
-from config.database import engine
+from etl.load.load import engine
 from sqlalchemy.orm import Session, sessionmaker
 
 Session = sessionmaker(bind=engine)

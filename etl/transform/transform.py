@@ -7,15 +7,16 @@ dropFountainColumns = [
 ]
 
 renameFountainColumns = {
-    'system': 'id',
-    'featuresta': 'status',
+    'system':'fountain_id',
+    'featuresta':'status',
     'propertyna':'located_at',
-    'the_geom':'coordinates'
+    'the_geom':'coordinates',
+    ':updated_at':'updated_at'
 }
 
 typeCastFountainColumns = {
-    ':updated_at':'string',
-    'id': 'string',
+    'updated_at':'string',
+    'fountain_id': 'string',
     'status':'category',
     'located_at':'string',
     'borough':'category',
@@ -36,11 +37,12 @@ renameTreeColumns = {
     'tree_id':'id',
     'spc_common':'name',
     'boroname':'borough',
-    'cb_num': 'district'
+    'cb_num': 'district',
+    ':updated_at':'updated_at'
 }
 
 typeCastTreeColumns = {
-    ':updated_at':'string',
+    'updated_at':'string',
     'id': 'string',
     'status':'category',
     'name':'string',

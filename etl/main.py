@@ -4,21 +4,20 @@ from load.load import load_data
 import time
 import asyncio
 
+
 async def test_ETL_Fountain(): 
     fountain = read_drinking_fountains_data()
-    fountainTransformed = transform_drinking_fountains_data(fountain)
-    for index, row in fountainTransformed.iterrows():
-        fountainTransformed['coordinates'] = f'{row['coordinates'].x},{row['coordinates'].y}'
-    await load_data('Fountains', fountainTransformed)
+    fountain = transform_drinking_fountains_data(fountain)
+    for i, row in fountain.iterrows():
+        fountain['coordinates'] = f'{row['coordinates'].x},{row['coordinates'].y}'
+    await load_data('Fountains', fountain)
     return 0
 
 async def test_ETL_Tree():
     tree = read_tree_census_data()
-    treeTransformed = transform_trees_census_data(tree)
-    print(treeTransformed.info())
-    for index,row in treeTransformed.iterrows():
-        treeTransformed['geometry'] = f'{row['geometry'].x},{row['geometry'].y}'
-    await load_data('Trees', treeTransformed)
+    tree = transform_trees_census_data(tree)
+    tree = tree.drop(columns=['geometry'])
+    await load_data('Trees', tree)
     return 0
 
 def main():
@@ -28,7 +27,7 @@ def main():
     asyncio.run(test_ETL_Fountain())
     stop = time.time()
     print(f"Execution time: {round(stop - start)} Second(s)")
-    #asyncio.run(test_ETL_Tree())
+    asyncio.run(test_ETL_Tree())
 
     end = time.time()
     print(f"Execution time: {round(end - stop)} Second(s)")
@@ -37,6 +36,5 @@ def main():
 if __name__ == "__main__":
     main()
 
-# !ISSUE: calling the api endpoint for the tree data & transforming data results in long load : 30+ sec load
-# !ISSUE: loading map of tree points results in long load: 4 mins
+# !NOTICE: Will move from sqlite to spatialite to hold geo data
 # !ISSUE: Error using tree functions with docker
