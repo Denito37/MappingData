@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NYC Cooling Structures Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        #map { height: 100vh; width: 100%; }
+        .info-panel {
+            position: absolute; top: 10px; left: 50px; z-index: 1000;
+            background: white; padding: 15px; border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2); max-width: 300px;
+        }
+        .info-panel h1 { font-size: 16px; margin-bottom: 8px; color: #333; }
+        .info-panel p { font-size: 12px; color: #666; }
+        .legend {
+            position: absolute; bottom: 30px; left: 10px; z-index: 1000;
+            background: white; padding: 10px 15px; border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        .legend h4 { margin-bottom: 8px; font-size: 13px; }
+        .legend-item { display: flex; align-items: center; margin: 5px 0; font-size: 12px; }
+        .legend-color { width: 16px; height: 16px; border-radius: 50%; margin-right: 8px; }
+        .fountain-color { background: #0077be; }
+        .tree-color { background: #228b22; }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <div class="info-panel">
+        <h1>NYC Cooling Structures</h1>
+        <p>Use layer controls (top right) to toggle layers on/off.</p>
+    </div>
+    <div class="legend">
+        <h4>Legend</h4>
+        <div class="legend-item"><div class="legend-color fountain-color"></div><span>Drinking Fountains</span></div>
+        <div class="legend-item"><div class="legend-color tree-color"></div><span>Trees (coming soon)</span></div>
+    </div>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        const map = L.map('map').setView([40.7128, -73.9560], 11);
+        const streetMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+        const satelliteMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            attribution: '© Esri'
+        });
+        const fountainsLayer = L.layerGroup();
+        const treesLayer = L.layerGroup();
+        const fountainIcon = L.divIcon({
+            html: '<div style="background:#0077be;width:10px;height:10px;border-radius:50%;border:2px solid white;box-shadow:0 1px 3px rgba(0,0,0,0.3);"></div>',
+            className: 'custom-marker', iconSize: [14, 14], iconAnchor: [7, 7]
+        });
+        fetch('fountains.geojson')
+            .then(r => r.json())
+            .then(data => {
+                data.features.forEach(f => {
+                    const [lon, lat] = f.geometry.coordinates;
+                    const p = f.properties;
+                    const boroughs = {M:'Manhattan',B:'Brooklyn',Q:'Queens',X:'Bronx',R:'Staten Island'};
+                    L.marker([lat, lon], {icon: fountainIcon})
+                        .bindPopup(`<b>${p.name}</b><br>Borough: ${boroughs[p.borough]||p.borough}<br>Status: ${p.status}`)
+                        .addTo(fountainsLayer);
+                });
+                console.log(`Loaded ${data.features.length} fountains`);
+            });
+        fetch('trees.geojson').then(r => r.json()).then(data => {
+            data.features.forEach(f => {
+                const [lon, lat] = f.geometry.coordinates;
+                L.circleMarker([lat, lon], {radius:3,color:'#228b22',fillOpacity:0.7})
+                    .bindPopup(`<b>${f.properties.name||'Tree'}</b>`)
+                    .addTo(treesLayer);
+            });
+        }).catch(() => console.log('Trees not available yet'));
+        L.control.layers({"Street":streetMap,"Satellite":satelliteMap},{"Fountains":fountainsLayer,"Trees":treesLayer},{collapsed:false}).addTo(map);
+        fountainsLayer.addTo(map);
+    </script>
+</body>
+</html>
